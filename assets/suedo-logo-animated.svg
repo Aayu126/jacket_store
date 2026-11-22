@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" width="100%" height="260">
+  <defs>
+    <!-- Shimmer linear gradient for luxury gold text -->
+    <linearGradient id="goldShimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9a724a">
+        <animate attributeName="stop-color" values="#9a724a;#e5c287;#ffffff;#e5c287;#9a724a" dur="4s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="50%" stop-color="#e5c287">
+        <animate attributeName="stop-color" values="#e5c287;#ffffff;#e5c287;#9a724a;#e5c287" dur="4s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="100%" stop-color="#c49b66">
+        <animate attributeName="stop-color" values="#c49b66;#9a724a;#e5c287;#ffffff;#c49b66" dur="4s" repeatCount="indefinite" />
+      </stop>
+    </linearGradient>
+
+    <!-- Subtle background radial glow -->
+    <radialGradient id="ambientGlow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#2a241e" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#141413" stop-opacity="1" />
+    </radialGradient>
+
+    <!-- Chrome Rod Gradient -->
+    <linearGradient id="chromeRod" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4a4a4a" />
+      <stop offset="25%" stop-color="#a3a3a3" />
+      <stop offset="50%" stop-color="#ffffff" />
+      <stop offset="75%" stop-color="#8c8c8c" />
+      <stop offset="100%" stop-color="#404040" />
+    </linearGradient>
+
+    <!-- Filter for subtle luxury drop shadow -->
+    <filter id="luxuryShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+  </defs>
+
+  <style>
+    @keyframes sway {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(3.5deg); }
+      50% { transform: rotate(0deg); }
+      75% { transform: rotate(-3.5deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes pulseHanger {
+      0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 2px #d4af37); }
+      50% { opacity: 1; filter: drop-shadow(0 0 8px #ffd700); }
+    }
+    @keyframes floatBar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+    .sway-item {
+      transform-origin: 450px 38px;
+      animation: sway 6s ease-in-out infinite;
+    }
+    .logo-font {
+      font-family: -apple-system, BlinkMacSystemFont, "Playfair Display", "Cinzel", "Didot", "Bodoni MT", Georgia, serif;
+    }
+    .sub-font {
+      font-family: -apple-system, BlinkMacSystemFont, "Montserrat", "Helvetica Neue", Arial, sans-serif;
+    }
+    .ambient-pulse {
+      animation: pulseHanger 4s ease-in-out infinite;
+    }
+  </style>
+
+  <!-- Container Box with Rounded Luxury Border -->
+  <rect x="2" y="2" width="896" height="256" rx="20" fill="url(#ambientGlow)" stroke="#3a3227" stroke-width="2" />
+
+  <!-- Atelier Chrome Wardrobe Rail at Top -->
+  <g class="ambient-pulse">
+    <!-- Mounting Brackets -->
+    <circle cx="120" cy="38" r="8" fill="#555" stroke="#888" stroke-width="2" />
+    <circle cx="780" cy="38" r="8" fill="#555" stroke="#888" stroke-width="2" />
+    <rect x="120" y="34" width="660" height="8" rx="4" fill="url(#chromeRod)" filter="url(#luxuryShadow)" />
+  </g>
+
+  <!-- Animated Coat Hanger Swings from Chrome Rod -->
+  <g class="sway-item">
+    <!-- Metallic Hook over Rod -->
+    <path d="M 450,38 C 450,22 466,22 466,32 C 466,42 450,46 450,56" fill="none" stroke="url(#chromeRod)" stroke-width="3" stroke-linecap="round" />
+    
+    <!-- Polished Walnut / Gold Hanger Body -->
+    <path d="M 450,56 L 396,82 C 392,84 390,88 393,91 C 396,93 400,92 404,90 L 450,70 L 496,90 C 500,92 504,93 507,91 C 510,88 508,84 504,82 Z" fill="#9a724a" stroke="#d4af37" stroke-width="1.5" filter="url(#luxuryShadow)" />
+    
+    <!-- Hanger Crossbar -->
+    <line x1="406" y1="88" x2="494" y2="88" stroke="#7a5430" stroke-width="2" stroke-linecap="round" />
+    
+    <!-- Emblem Monogram on Hanger -->
+    <circle cx="450" cy="65" r="3.5" fill="#e5c287" />
+  </g>
+
+  <!-- Brand Typography -->
+  <!-- Main Brand Title -->
+  <text x="450" y="160" text-anchor="middle" class="logo-font" font-size="52" font-weight="900" letter-spacing="14" fill="url(#goldShimmer)" filter="url(#luxuryShadow)">
+    SUEDO
+  </text>
+
+  <!-- Atelier Marque Subtitle -->
+  <text x="450" y="194" text-anchor="middle" class="sub-font" font-size="13" font-weight="600" letter-spacing="9" fill="#c49b66">
+    ATELIER · FIRENZE 1974
+  </text>
+
+  <!-- Decorative Separator Stars & Rule -->
+  <g opacity="0.6">
+    <line x1="280" y1="216" x2="410" y2="216" stroke="#c49b66" stroke-width="1" />
+    <text x="450" y="220" text-anchor="middle" class="sub-font" font-size="11" fill="#e5c287">✦  HAUTE OUTERWEAR  ✦</text>
+    <line x1="490" y1="216" x2="620" y2="216" stroke="#c49b66" stroke-width="1" />
+  </g>
+
+  <!-- Micro Technical Spec Tag -->
+  <text x="450" y="240" text-anchor="middle" class="sub-font" font-size="10.5" font-weight="400" letter-spacing="2" fill="#7d7365">
+    60 FPS PHYSICS RACK · 3D TURNTABLE INSPECTOR · DYNAMIC UPI &amp; MULTI-CURRENCY
+  </text>
+</svg>
