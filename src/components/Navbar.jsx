@@ -142,7 +142,8 @@ export default function Navbar({ onOpenMenu, onSelectProduct, onNavigateToCollec
                 type="button"
               >
                 <span className="currency-flag">{currentCurrency.flag}</span>
-                <span className="currency-code-text">{currentCurrency.code} ({currentCurrency.symbol.trim()})</span>
+                <span className="currency-code-text">{currentCurrency.code}</span>
+                <span className="currency-symbol-sub"> ({currentCurrency.symbol.trim()})</span>
                 <span className="currency-chevron">▾</span>
               </button>
 

@@ -29,7 +29,7 @@ export default function Hero({ onSelectGarment, rackRef, onViewAll }) {
       <div className="hero-content">
         {/* Eyebrow: COLLECTION TITLE | SUBTITLE */}
         <div className="eyebrow" id="eyebrow">
-          <span>Atelier Heritage</span>
+          <span className="eyebrow-main">Atelier Heritage</span>
           <span className="eyebrow-divider" aria-hidden="true"></span>
           <span className="eyebrow-sub">Autumn / Winter '26 Collection</span>
         </div>
@@ -48,7 +48,7 @@ export default function Hero({ onSelectGarment, rackRef, onViewAll }) {
           onHoverGarment={handleHoverGarment}
         />
 
-        {/* Rack Switcher Tabs */}
+        {/* Rack Switcher Tabs - Rendered as 2 separate buttons on mobile */}
         <div className="rack-sample-selector" role="tablist" aria-label="Hero clothes rack view selector">
           <button
             className={`sample-tab-btn ${activeRackView === 'samples' ? 'active' : ''}`}
@@ -56,7 +56,8 @@ export default function Hero({ onSelectGarment, rackRef, onViewAll }) {
             role="tab"
             aria-selected={activeRackView === 'samples'}
           >
-            ★ Featured Samples (2 Puffer · 2 Varsity)
+            <span className="tab-desktop-text">★ Featured Samples (2 Puffer · 2 Varsity)</span>
+            <span className="tab-mobile-text">★ Featured Samples</span>
           </button>
           <button
             className={`sample-tab-btn ${activeRackView === 'suede' ? 'active' : ''}`}
