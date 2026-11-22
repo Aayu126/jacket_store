@@ -1,69 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export const CURRENCIES = {
-  USD: {
-    code: 'USD',
-    symbol: '$',
-    name: 'United States Dollar',
-    flag: '🇺🇸',
-    label: 'USD ($) — United States',
-    rate: 1.0,
-    decimals: 0
-  },
-  EUR: {
-    code: 'EUR',
-    symbol: '€',
-    name: 'European Euro',
-    flag: '🇪🇺',
-    label: 'EUR (€) — European Union',
-    rate: 1.0,
-    decimals: 0
-  },
-  GBP: {
-    code: 'GBP',
-    symbol: '£',
-    name: 'British Pound',
-    flag: '🇬🇧',
-    label: 'GBP (£) — United Kingdom',
-    rate: 1.0,
-    decimals: 0
-  },
-  CAD: {
-    code: 'CAD',
-    symbol: 'CA$',
-    name: 'Canadian Dollar',
-    flag: '🇨🇦',
-    label: 'CAD ($) — Canada',
-    rate: 1.0,
-    decimals: 0
-  },
-  AUD: {
-    code: 'AUD',
-    symbol: 'AU$',
-    name: 'Australian Dollar',
-    flag: '🇦🇺',
-    label: 'AUD ($) — Australia',
-    rate: 1.0,
-    decimals: 0
-  },
-  JPY: {
-    code: 'JPY',
-    symbol: '¥',
-    name: 'Japanese Yen',
-    flag: '🇯🇵',
-    label: 'JPY (¥) — Japan',
-    rate: 1.0,
-    decimals: 0
-  },
-  CHF: {
-    code: 'CHF',
-    symbol: 'CHF ',
-    name: 'Swiss Franc',
-    flag: '🇨🇭',
-    label: 'CHF (Fr) — Switzerland',
-    rate: 1.0,
-    decimals: 0
-  },
   INR: {
     code: 'INR',
     symbol: '₹',
@@ -73,14 +10,77 @@ export const CURRENCIES = {
     rate: 1.0,
     decimals: 0
   },
+  USD: {
+    code: 'USD',
+    symbol: '$',
+    name: 'United States Dollar',
+    flag: '🇺🇸',
+    label: 'USD ($) — United States',
+    rate: 0.0116,
+    decimals: 2
+  },
+  EUR: {
+    code: 'EUR',
+    symbol: '€',
+    name: 'European Euro',
+    flag: '🇪🇺',
+    label: 'EUR (€) — European Union',
+    rate: 0.0109,
+    decimals: 2
+  },
+  GBP: {
+    code: 'GBP',
+    symbol: '£',
+    name: 'British Pound',
+    flag: '🇬🇧',
+    label: 'GBP (£) — United Kingdom',
+    rate: 0.0091,
+    decimals: 2
+  },
+  CAD: {
+    code: 'CAD',
+    symbol: 'CA$',
+    name: 'Canadian Dollar',
+    flag: '🇨🇦',
+    label: 'CAD ($) — Canada',
+    rate: 0.0164,
+    decimals: 2
+  },
+  AUD: {
+    code: 'AUD',
+    symbol: 'AU$',
+    name: 'Australian Dollar',
+    flag: '🇦🇺',
+    label: 'AUD ($) — Australia',
+    rate: 0.0182,
+    decimals: 2
+  },
+  JPY: {
+    code: 'JPY',
+    symbol: '¥',
+    name: 'Japanese Yen',
+    flag: '🇯🇵',
+    label: 'JPY (¥) — Japan',
+    rate: 1.76,
+    decimals: 0
+  },
+  CHF: {
+    code: 'CHF',
+    symbol: 'CHF ',
+    name: 'Swiss Franc',
+    flag: '🇨🇭',
+    label: 'CHF (Fr) — Switzerland',
+    rate: 0.0103,
+    decimals: 2
+  },
   AED: {
     code: 'AED',
     symbol: 'AED ',
     name: 'UAE Dirham',
     flag: '🇦🇪',
     label: 'AED (د.إ) — United Arab Emirates',
-    rate: 1.0,
-    decimals: 0
+    rate: 0.0426,
+    decimals: 2
   },
   SGD: {
     code: 'SGD',
@@ -88,14 +88,14 @@ export const CURRENCIES = {
     name: 'Singapore Dollar',
     flag: '🇸🇬',
     label: 'SGD ($) — Singapore',
-    rate: 1.0,
-    decimals: 0
+    rate: 0.0155,
+    decimals: 2
   }
 };
 
-export function formatCurrency(amountInUsd, currencyCode = 'USD') {
-  const curr = CURRENCIES[currencyCode] || CURRENCIES.USD;
-  const num = typeof amountInUsd === 'number' ? amountInUsd : parseFloat(amountInUsd) || 0;
+export function formatCurrency(amountInBase, currencyCode = 'INR') {
+  const curr = CURRENCIES[currencyCode] || CURRENCIES.INR;
+  const num = typeof amountInBase === 'number' ? amountInBase : parseFloat(amountInBase) || 0;
   const converted = num * curr.rate;
 
   if (curr.decimals === 0) {
@@ -112,9 +112,9 @@ const CurrencyContext = createContext(null);
 export function CurrencyProvider({ children }) {
   const [currency, setCurrency] = useState(() => {
     try {
-      return localStorage.getItem('suedo_currency') || 'USD';
+      return localStorage.getItem('suedo_currency') || 'INR';
     } catch (_) {
-      return 'USD';
+      return 'INR';
     }
   });
 
@@ -130,11 +130,11 @@ export function CurrencyProvider({ children }) {
     }
   };
 
-  const formatPrice = (usdAmount) => {
-    return formatCurrency(usdAmount, currency);
+  const formatPrice = (baseAmount) => {
+    return formatCurrency(baseAmount, currency);
   };
 
-  const currentCurrency = CURRENCIES[currency] || CURRENCIES.USD;
+  const currentCurrency = CURRENCIES[currency] || CURRENCIES.INR;
 
   return (
     <CurrencyContext.Provider

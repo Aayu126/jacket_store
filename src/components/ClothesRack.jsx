@@ -464,7 +464,7 @@ const ClothesRack = forwardRef(function ClothesRack({ items = CONTENT.rack, onSe
                 className="garment-item"
                 tabIndex={0}
                 role="button"
-                aria-label={`${prod.name}, ${prod.price}`}
+                aria-label={`${prod.name}, ${formatPrice(prod.numericPrice)}`}
                 ref={el => {
                   if (itemsRef.current && itemsRef.current[index]) {
                     itemsRef.current[index].element = el;
