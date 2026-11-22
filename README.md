@@ -4,19 +4,31 @@
 
 ---
 
-## 📸 Visual Showcase & Screenshots
+## 📸 Visual Showcase & Real Website Screenshots
 
 ### 1. Interactive 60 FPS Clothes Rack with Physics & Re-Hang Swing
 The signature hero experience replicates browsing physical garments on a brushed-chrome atelier rod. Garments sway with natural momentum, spring dynamics, and live price tags.
-![Interactive Clothes Rack on Hanger](screenshots/hero-hanger-rack.jpg)
+![Interactive Clothes Rack on Hanger](screenshots/01-hero-clothes-rack.png)
 
-### 2. Anatomical Craftsmanship & Hotspot Explorer
+### 2. Signature 3-Silhouette Outerwear Edit (Home Preview)
+Curated sampling of our defining silhouettes: Tuscan Velour Suede, 750-Fill Alpine Puffers, and Collegiate English Wool Varsity jackets with multi-angle tab toggles.
+![Signature Outerwear Preview](screenshots/02-signature-collection.png)
+
+### 3. Anatomical Craftsmanship & Hotspot Explorer
 Interactive multi-category craftsmanship explorer for Tuscan Velour Suede, 750-Fill Alpine Puffers, and 24oz English Wool Varsity silhouettes with clickable anatomical detail callouts.
-![Craftsmanship Anatomy & Specifications](screenshots/craftsmanship-anatomy.png)
+![Craftsmanship Anatomy & Specifications](screenshots/03-craftsmanship-anatomy.png)
 
-### 3. Editorial Lookbook Marquee & Styling Gallery
+### 4. Editorial Lookbook Marquee & Styling Gallery
 Infinite horizontal marquee showcasing Milan showroom captures, layered outerwear pairings, and editorial styling cards with hover-pause inspection.
-![Editorial Lookbook Marquee](screenshots/editorial-lookbook.jpg)
+![Editorial Lookbook Marquee](screenshots/04-editorial-lookbook.png)
+
+### 5. Dedicated Payment & Checkout Page (UPI QR, Cards & Multi-Currency)
+Tailored checkout experience adapting dynamically to the client's currency. Features instant UPI QR code scanning (GPay, PhonePe, Paytm, CRED), Net Banking, RuPay, Apple Pay, PayPal, and Klarna.
+![Secure Checkout & Payment Gateway](screenshots/05-checkout-payment-methods.png)
+
+### 6. Mobile-First Responsive Experience (iPhone Viewport)
+Fluidly adapts from 320px mobile screens to wide monitors, retaining all physics, touch controls, and slide-over bag drawers without horizontal overflow.
+![Mobile Responsive Architecture](screenshots/06-mobile-responsive.png)
 
 ---
 
