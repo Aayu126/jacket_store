@@ -1,0 +1,11 @@
+# AI Agent & Editor directories
+.agents
+.claude
+.cursor
+.gemini
+.chrome-temp
+*.vanilla-backup
+
+# Screenshots & Local Scripts
+screenshots
+scripts

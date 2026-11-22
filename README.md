@@ -18,8 +18,16 @@
   <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src="https://img.shields.io/badge/ES2024_Modern_JS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" /></a>
   <a href="https://developer.mozilla.org/en-US/docs/Web/CSS"><img src="https://img.shields.io/badge/CSS3_Luxury_Tokens-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" /></a>
   <a href="https://www.npci.org.in/"><img src="https://img.shields.io/badge/Instant_UPI_QR_Gateway-097939?style=for-the-badge&logo=googlepay&logoColor=white" alt="UPI Gateway" /></a>
+  <a href="https://vercel.com/"><img src="https://img.shields.io/badge/Vercel-Ready-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel Ready" /></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-C5A059?style=for-the-badge" alt="MIT License" /></a>
   <a href="https://github.com/Aayu126/jacket_store"><img src="https://img.shields.io/badge/Status-Production_Ready-2ea44f?style=for-the-badge" alt="Production Ready" /></a>
+</p>
+
+<!-- 1-Click Vercel Deploy Button -->
+<p align="center">
+  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAayu126%2Fjacket_store">
+    <img src="https://vercel.com/button" alt="Deploy with Vercel" />
+  </a>
 </p>
 
 ---
@@ -238,9 +246,41 @@ jacket_store/
 │   ├── index.css                     # Master stylesheet & responsive design tokens
 │   └── main.jsx                      # React 19 bootstrap entry
 ├── .gitignore                        # Clean git exclusions (no skill/AI directories)
+├── .vercelignore                     # Vercel upload exclusions
 ├── index.html                        # HTML5 entry template
-├── package.json                      # NPM dependencies & scripts
+├── package.json                      # NPM dependencies & scripts (Node >=18 engine)
+├── vercel.json                       # Vercel deployment configuration (SPA rewrites & cache headers)
 └── vite.config.js                    # Vite 6 configuration
+```
+
+---
+
+## ☁️ Deploying to Vercel
+
+This repository is **100% Vercel deployment ready** with a pre-configured `vercel.json` for Vite Single-Page Application (SPA) routing, immutable asset caching, and security headers.
+
+### Option 1: 1-Click Instant Deploy
+Click the button below to fork and deploy directly to your Vercel account:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAayu126%2Fjacket_store)
+
+### Option 2: Deploy via Vercel Dashboard (GitHub Integration)
+1. Go to [vercel.com/new](https://vercel.com/new).
+2. Select **Import Git Repository** and choose `jacket_store`.
+3. Vercel automatically detects **Vite**:
+   - **Framework Preset**: `Vite`
+   - **Build Command**: `vite build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `npm install`
+4. Click **Deploy**. Your live production site will be active in seconds!
+
+### Option 3: Deploy via Vercel CLI
+```bash
+# Install Vercel CLI globally (if not already installed)
+npm i -g vercel
+
+# Deploy directly from terminal
+vercel --prod
 ```
 
 ---
