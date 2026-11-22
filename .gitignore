@@ -7,14 +7,15 @@ node_modules/
 dist/
 dist-ssr/
 
-# Editor & AI Agent / Skill configuration directories (Do NOT upload skill directories)
-.agents/
-.claude/
-.cursor/
-.gemini/
+# Editor and workspace configuration
+.idea/
+.vscode/
 .chrome-temp/
-skills-lock.json
+.*
+!.gitignore
+!.vercelignore
 *.vanilla-backup
+skills-lock.json
 
 # Environment files
 .env

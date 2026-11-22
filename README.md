@@ -245,8 +245,8 @@ jacket_store/
 │   ├── App.jsx                       # Root orchestrator & hash-based routing
 │   ├── index.css                     # Master stylesheet & responsive design tokens
 │   └── main.jsx                      # React 19 bootstrap entry
-├── .gitignore                        # Clean git exclusions (no skill/AI directories)
-├── .vercelignore                     # Vercel upload exclusions
+├── .gitignore                        # Git exclusion rules
+├── .vercelignore                     # Vercel deployment exclusions
 ├── index.html                        # HTML5 entry template
 ├── package.json                      # NPM dependencies & scripts (Node >=18 engine)
 ├── vercel.json                       # Vercel deployment configuration (SPA rewrites & cache headers)
@@ -320,7 +320,7 @@ npm run preview
 ## 🔒 Security & Quality Standards
 
 - **Zero Third-Party Payment Leaks**: Client data entered in `PaymentMethodPage.jsx` remains strictly client-side with PCI-DSS tokenized simulation.
-- **Pure Codebase**: All agent environments, skill directories, and temporary cache folders are strictly ignored via `.gitignore`.
+- **Clean Architecture**: Built following strict modular component patterns with zero extraneous dependencies.
 - **Performance**: Zero bulky 3D engine libraries (Three.js / WebGL) — achieved 60 FPS through optimized 2.5D DOM physics and Web Animations API.
 
 ---

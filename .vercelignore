@@ -1,8 +1,4 @@
-# AI Agent & Editor directories
-.agents
-.claude
-.cursor
-.gemini
+# Local cache & workspace files
 .chrome-temp
 *.vanilla-backup
 
