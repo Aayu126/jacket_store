@@ -36,13 +36,13 @@ export default function Footer({ onOpen3DModal }) {
           {/* Footer Quick Newsletter Box */}
           <div className="footer-newsletter-wrap">
             <span className="footer-perk-tag">NEW CLIENT INCENTIVE</span>
-            <h4 className="footer-newsletter-headline">Receive $30 Off Your First Order</h4>
+            <h4 className="footer-newsletter-headline">Receive 10% Off Your First Order</h4>
             <p className="footer-newsletter-desc">
               Subscribe to the Florence Atelier Registry for seasonal archive allocations, private trunk show invitations, and complimentary custom sleeve hemming.
             </p>
             {subscribed ? (
               <div className="footer-newsletter-success">
-                ✓ Welcome to the Atelier. Your $30 welcome voucher has been dispatched to your email.
+                ✓ Welcome to the Atelier. Your 10% welcome voucher has been dispatched to your email.
               </div>
             ) : (
               <form className="footer-newsletter-form" onSubmit={handleNewsletter}>
@@ -64,27 +64,49 @@ export default function Footer({ onOpen3DModal }) {
 
         {/* Links Multi-Column E-Commerce Grid */}
         <div className="footer-columns-grid">
-          {/* Col 1: Shop Outerwear */}
+          {/* Col 1: Shop Outerwear - Curated to Main Silhouette Categories */}
           <div className="footer-col">
             <h4 className="footer-col-title">Shop Outerwear</h4>
             <ul className="footer-links-list">
-              {CONTENT.allProducts.map((jacket, idx) => (
-                <li key={jacket.id || jacket.name}>
-                  <button
-                    className="footer-link-btn"
-                    onClick={() => onOpen3DModal(jacket)}
-                    title={`View ${jacket.name} in 360°`}
-                  >
-                    {jacket.name}
-                  </button>
-                </li>
-              ))}
-              <li><a href="#collection" className="footer-link">Suede Care Kits & Brass Brush</a></li>
-              <li><a href="#collection" className="footer-link">Digital Atelier Gift Cards</a></li>
+              <li>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={() => onOpen3DModal(CONTENT.suedeProducts[0])}
+                  title="Explore Suede Jackets in 360°"
+                >
+                  Suede Jackets
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={() => onOpen3DModal(CONTENT.newProducts.find(p => p.category === 'Varsity') || CONTENT.newProducts[3])}
+                  title="Explore Varsity Jackets in 360°"
+                >
+                  Varsity Jackets
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  className="footer-link-btn"
+                  onClick={() => onOpen3DModal(CONTENT.newProducts.find(p => p.category === 'Puffer') || CONTENT.newProducts[0])}
+                  title="Explore Puffer Jackets in 360°"
+                >
+                  Puffer Jackets
+                </button>
+              </li>
+              <li>
+                <a href="#/collection" className="footer-link">
+                  View All Silhouettes →
+                </a>
+              </li>
             </ul>
           </div>
 
-          {/* Col 2: Client Concierge */}
+          {/* Col 2: Customer Care */}
           <div className="footer-col">
             <h4 className="footer-col-title">Customer Care</h4>
             <ul className="footer-links-list">
@@ -93,9 +115,7 @@ export default function Footer({ onOpen3DModal }) {
               <li><a href="#faq" className="footer-link">Worldwide Shipping Rates & Times</a></li>
               <li><a href="#faq" className="footer-link">30-Day Returns & Size Exchanges</a></li>
               <li><a href="#bespoke" className="footer-link">Tailored Proportions & Fit Guide</a></li>
-              <li><a href="#materials" className="footer-link">Waterproofing & Suede Care Guide</a></li>
               <li><a href="#faq" className="footer-link">Frequently Asked Questions (FAQ)</a></li>
-              <li><a href="mailto:concierge@suedo.example" className="footer-link">Book a Private Fitting Appointment</a></li>
             </ul>
           </div>
 
@@ -107,9 +127,7 @@ export default function Footer({ onOpen3DModal }) {
               <li><a href="#materials" className="footer-link">Tuscan Tanneries & Velour Nap</a></li>
               <li><a href="#craftsmanship" className="footer-link">Bespoke Anatomy & Hand Welt Stitching</a></li>
               <li><a href="#lookbook" className="footer-link">Autumn / Winter Editorial Lookbook</a></li>
-              <li><a href="#story" className="footer-link">Sustainable Zero-Chromium Tanning</a></li>
               <li><a href="#reviews" className="footer-link">Client Reviews & Press Accolades</a></li>
-              <li><a href="mailto:careers@suedo.example" className="footer-link">Artisan Careers & Apprenticeships</a></li>
             </ul>
           </div>
 

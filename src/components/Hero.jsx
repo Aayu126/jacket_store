@@ -36,7 +36,7 @@ export default function Hero({ onSelectGarment, rackRef, onViewAll }) {
 
         {/* Big Headline */}
         <h1 className="hero-headline" id="headline">
-          Signature Outerwear <span className="headline-dim">& Suede</span>
+          Timeless Silhouettes <span className="headline-dim">& Modern Craft</span>
         </h1>
 
         {/* Clothes Rack Stage (Curated sample of 2 Puffer + 2 Varsity by default) */}
