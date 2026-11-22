@@ -113,7 +113,7 @@ graph TD
 ## 📸 Real Website Showcase
 
 ### 1. 🛍️ Interactive 60 FPS Clothes Rack with Natural Sway
-The signature hero experience replicates physical garment browsing on a brushed-chrome atelier rod. Garments sway with realistic momentum, spring dampening, and live price tags.
+The signature hero experience replicates physical garment browsing on a brushed-chrome atelier rod with all 7 Suedo Heritage silhouettes. Garments sway with realistic momentum, spring dampening, and live price tags.
 ![Interactive Clothes Rack on Hanger](screenshots/01-hero-clothes-rack.png)
 
 > [!TIP]
@@ -121,35 +121,15 @@ The signature hero experience replicates physical garment browsing on a brushed-
 
 ---
 
-### 2. 🧥 Curated 3-Silhouette Outerwear Edit (Home Preview)
-Clean presentation of our defining silhouettes: Tuscan Velour Suede, 750-Fill Alpine Puffers, and Collegiate English Wool Varsity jackets with instant Front/Side/Back profile previews.
-![Signature Outerwear Preview](screenshots/02-signature-collection.png)
-
----
-
-### 3. 🔍 Anatomical Craftsmanship & Hotspot Explorer
+### 2. 🔍 Anatomical Craftsmanship & Hotspot Explorer
 Interactive multi-category explorer for **Tuscan Velour Suede**, **750-Fill Alpine Down**, and **24oz English Wool Varsity** jackets. Clicking anatomical detail pins reveals artisan specifications, material origins, and structural tolerances.
-![Craftsmanship Anatomy & Specifications](screenshots/03-craftsmanship-anatomy.png)
+![Craftsmanship Anatomy & Specifications](screenshots/02-craftsmanship-anatomy.png)
 
 ---
 
-### 4. 🎞️ Editorial Lookbook Marquee & Styling Gallery
+### 3. 🎞️ Editorial Lookbook Marquee & Styling Gallery
 Infinite horizontal marquee showcasing Milan showroom captures, layered outerwear pairings, and editorial styling cards with hover-pause inspection and 360° inspect badges.
-![Editorial Lookbook Marquee](screenshots/04-editorial-lookbook.png)
-
----
-
-### 5. ⚡ Dedicated Checkout & Multi-Currency Engine with Instant UPI QR
-Tailored checkout adapting dynamically to client currency:
-- **India (INR - ₹)**: Real-time dynamic UPI QR code (`Google Pay`, `PhonePe`, `Paytm`, `CRED`, `BHIM`) with a live 10-minute validity timer, VPA input, RuPay 3D Secure, NetBanking, and Cash on Delivery.
-- **Global (USD, EUR, GBP, CAD, AUD, etc.)**: Visa, MasterCard, AMEX, 1-click Apple Pay / Google Wallet, PayPal Express with 180-day buyer protection, and Klarna / Afterpay installments.
-![Secure Checkout & Payment Gateway](screenshots/05-checkout-payment-methods.png)
-
----
-
-### 6. 📱 Mobile-First Responsive Architecture
-Fluidly scales down to 320px mobile screens without clipping or horizontal overflow. Retains touch swipe mechanics, slide-over bag drawers, and full-fidelity 3D inspection.
-![Mobile Responsive Architecture](screenshots/06-mobile-responsive.png)
+![Editorial Lookbook Marquee](screenshots/03-editorial-lookbook.png)
 
 ---
 
@@ -221,11 +201,8 @@ jacket_store/
 │   └── suedo-logo-animated.svg       # Animated SVG luxury coat-hanger logo banner
 ├── screenshots/                      # Real high-resolution website captures
 │   ├── 01-hero-clothes-rack.png      # 60 FPS clothes rack with 7 suede silhouettes
-│   ├── 02-signature-collection.png   # 3-Silhouette curated home edit
-│   ├── 03-craftsmanship-anatomy.png  # Craftsmanship anatomical hotspot explorer
-│   ├── 04-editorial-lookbook.png     # Infinite marquee editorial lookbook
-│   ├── 05-checkout-payment-methods.png # Dynamic checkout page with instant UPI QR
-│   └── 06-mobile-responsive.png      # Mobile responsive architecture on iPhone
+│   ├── 02-craftsmanship-anatomy.png  # Craftsmanship anatomical hotspot explorer
+│   └── 03-editorial-lookbook.png     # Infinite marquee editorial lookbook
 ├── scripts/
 │   └── capture-screenshots.js        # Automated headless capture pipeline
 ├── src/
