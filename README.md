@@ -23,11 +23,17 @@
   <a href="https://github.com/Aayu126/jacket_store"><img src="https://img.shields.io/badge/Status-Production_Ready-2ea44f?style=for-the-badge" alt="Production Ready" /></a>
 </p>
 
-<!-- 1-Click Vercel Deploy Button -->
+<!-- 1-Click Vercel Deploy Button & Live Demo -->
 <p align="center">
+  <a href="https://jacket-store-blue.vercel.app/">
+    <img src="https://img.shields.io/badge/🌐_Live_Demo-jacket--store--blue.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo on Vercel" />
+  </a>
   <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAayu126%2Fjacket_store">
     <img src="https://vercel.com/button" alt="Deploy with Vercel" />
   </a>
+</p>
+<p align="center">
+  <b>Live Production Store:</b> <a href="https://jacket-store-blue.vercel.app/"><b>https://jacket-store-blue.vercel.app/</b></a>
 </p>
 
 ---
@@ -303,11 +309,14 @@ cd jacket_store
 npm install
 ```
 
-### 3. Launch Development Server
+### 3. Launch Live Site or Development Server
+- **🌐 Live Production Website**: [https://jacket-store-blue.vercel.app/](https://jacket-store-blue.vercel.app/)
+
+To run locally:
 ```bash
 npm run dev
 ```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Open [https://jacket-store-blue.vercel.app/](https://jacket-store-blue.vercel.app/) (or local development server at `http://localhost:5173`).
 
 ### 4. Build for Production
 ```bash
