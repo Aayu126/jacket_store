@@ -112,6 +112,38 @@ export function AuthProvider({ children }) {
     return { success: true, user: DEMO_USER };
   };
 
+  const loginWithGoogle = () => {
+    const googleUser = {
+      ...DEMO_USER,
+      id: 'SUE-G8912',
+      name: 'Alexander Vance',
+      firstName: 'Alexander',
+      lastName: 'Vance',
+      email: 'alexander.vance@gmail.com',
+      avatarInitials: 'AV',
+      tier: 'Florence Atelier Guild (Google Verified)',
+      memberSince: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    };
+    setUser(googleUser);
+    return { success: true, user: googleUser };
+  };
+
+  const loginWithApple = () => {
+    const appleUser = {
+      ...DEMO_USER,
+      id: 'SUE-A4091',
+      name: 'Alexander Vance',
+      firstName: 'Alexander',
+      lastName: 'Vance',
+      email: 'alexander.vance@privaterelay.appleid.com',
+      avatarInitials: 'AV',
+      tier: 'Florence Atelier Guild (Apple Verified)',
+      memberSince: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    };
+    setUser(appleUser);
+    return { success: true, user: appleUser };
+  };
+
   const signup = ({ name, email, phone, size, password }) => {
     const parts = name.trim().split(' ');
     const firstName = parts[0] || 'Collector';
@@ -207,6 +239,8 @@ export function AuthProvider({ children }) {
         isLoggedIn: !!user,
         login,
         loginAsDemo,
+        loginWithGoogle,
+        loginWithApple,
         signup,
         logout,
         updateProfile,
