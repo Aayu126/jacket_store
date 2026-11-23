@@ -1,0 +1,164 @@
+{
+  "info": {
+    "name": "Suedo Atelier API",
+    "description": "Postman Collection for Suedo Jacket Store (FastAPI + MySQL Backend)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. System Health",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/health"
+      }
+    },
+    {
+      "name": "2. Auth - Register New User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Julian Sterling\",\n  \"email\": \"julian@example.com\",\n  \"password\": \"SecurePass123!\",\n  \"phone\": \"+1 555-0199\",\n  \"size\": \"L\"\n}"
+        },
+        "url": "{{base_url}}/api/auth/register"
+      }
+    },
+    {
+      "name": "3. Auth - Login (Auto-saves Token)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var jsonData = pm.response.json();",
+              "if (jsonData.access_token) {",
+              "    pm.collectionVariables.set('token', jsonData.access_token);",
+              "    console.log('Token saved:', jsonData.access_token);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"collector@suedo.com\",\n  \"password\": \"CollectorPassword123!\"\n}"
+        },
+        "url": "{{base_url}}/api/auth/login"
+      }
+    },
+    {
+      "name": "4. Auth - Get Current User Profile",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{base_url}}/api/auth/me"
+      }
+    },
+    {
+      "name": "5. Products - List All Jackets",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/products"
+      }
+    },
+    {
+      "name": "6. Products - Filter by Category",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/products?category=Puffer",
+          "host": ["{{base_url}}"],
+          "path": ["api", "products"],
+          "query": [
+            { "key": "category", "value": "Puffer" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "7. Products - Get Single Silhouette",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/products/trucker-tobacco-brown"
+      }
+    },
+    {
+      "name": "8. Users - Save Bespoke Measurements",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"chest\": \"42\\\"\",\n  \"shoulders\": \"19.0\\\"\",\n  \"sleeves\": \"35\\\"\",\n  \"height\": \"6'1\\\"\",\n  \"fit_preference\": \"Tailored Slim\"\n}"
+        },
+        "url": "{{base_url}}/api/users/measurements"
+      }
+    },
+    {
+      "name": "9. Users - Save Shipping Address",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"address_line\": \"Penthouse 24, 5th Avenue\",\n  \"city\": \"New York\",\n  \"state\": \"NY\",\n  \"postal_code\": \"10001\",\n  \"country\": \"United States\"\n}"
+        },
+        "url": "{{base_url}}/api/users/address"
+      }
+    },
+    {
+      "name": "10. Orders - Place Bespoke Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    {\n      \"product_id\": \"bomber-jet-black\",\n      \"product_name\": \"Suede Bomber Jet Black\",\n      \"size\": \"L\",\n      \"color\": \"Jet Black\",\n      \"quantity\": 1,\n      \"price\": 235000.0\n    }\n  ],\n  \"total_amount\": 235000.0,\n  \"currency\": \"INR\",\n  \"shipping_address\": \"Penthouse 24, 5th Avenue, New York, NY 10001\"\n}"
+        },
+        "url": "{{base_url}}/api/orders"
+      }
+    },
+    {
+      "name": "11. Orders - List My Orders",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": "{{base_url}}/api/orders/my-orders"
+      }
+    }
+  ]
+}
