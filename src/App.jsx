@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CurrencyProvider } from './context/CurrencyContext.jsx';
 import { CartProvider } from './context/CartContext.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
 import Navbar from './components/Navbar.jsx';
 import MenuDrawer from './components/MenuDrawer.jsx';
 import CartDrawer from './components/CartDrawer.jsx';
@@ -9,6 +10,7 @@ import TrustBadges from './components/TrustBadges.jsx';
 import HomeCollectionPreview from './components/HomeCollectionPreview.jsx';
 import FullCollectionPage from './components/FullCollectionPage.jsx';
 import PaymentMethodPage from './components/PaymentMethodPage.jsx';
+import AccountPage from './components/AccountPage.jsx';
 import CustomerReviews from './components/CustomerReviews.jsx';
 import Craftsmanship from './components/Craftsmanship.jsx';
 import MaterialHeritage from './components/MaterialHeritage.jsx';
@@ -37,6 +39,8 @@ export default function App() {
         setCurrentPage('collection');
       } else if (window.location.hash === '#/checkout' || window.location.hash === '#checkout') {
         setCurrentPage('checkout');
+      } else if (window.location.hash === '#/account' || window.location.hash === '#/login' || window.location.hash === '#account' || window.location.hash === '#login') {
+        setCurrentPage('account');
       } else {
         setCurrentPage('home');
       }
@@ -53,8 +57,10 @@ export default function App() {
       window.location.hash = '#/collection';
     } else if (page === 'checkout') {
       window.location.hash = '#/checkout';
+    } else if (page === 'account') {
+      window.location.hash = '#/account';
     } else {
-      if (window.location.hash === '#/collection' || window.location.hash === '#/checkout') {
+      if (window.location.hash === '#/collection' || window.location.hash === '#/checkout' || window.location.hash === '#/account' || window.location.hash === '#/login') {
         history.pushState('', document.title, window.location.pathname + window.location.search);
       }
     }
@@ -108,56 +114,66 @@ export default function App() {
 
   return (
     <CurrencyProvider>
-      <CartProvider>
-        <div className="suedo-app">
-          {/* Sticky Luxury Navbar */}
-          <Navbar
-            currentPage={currentPage}
-            onOpenMenu={() => setIsMenuOpen(true)}
-            onSelectProduct={handleSelectProduct}
-            onNavigateToCollection={() => navigateToPage('collection')}
-            onNavigateToHome={(cb) => navigateToPage('home', cb)}
-          />
-
-          {/* Slide-over Fullscreen Navigation Menu */}
-          <MenuDrawer
-            isOpen={isMenuOpen}
-            onClose={() => setIsMenuOpen(false)}
-            onNavigate={(target) => {
-              if (target === 'collection') {
-                navigateToPage('collection');
-              } else {
-                navigateToPage('home', () => {
-                  setTimeout(() => {
-                    const el = document.getElementById(target);
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }, 120);
-                });
-              }
-            }}
-          />
-
-          {/* Slide-over Shopping Cart Drawer */}
-          <CartDrawer
-            onSelectProduct={handleSelectProduct}
-            onProceedToCheckout={() => navigateToPage('checkout')}
-          />
-
-          {currentPage === 'collection' ? (
-            /* SEPARATE FULL COLLECTION PAGE (Shows all 13 jackets with filters) */
-            <FullCollectionPage
-              onOpen3DModal={(jacket) => handleOpen3DModal(jacket)}
-              onBackToHome={() => navigateToPage('home')}
+      <AuthProvider>
+        <CartProvider>
+          <div className="suedo-app">
+            {/* Sticky Luxury Navbar */}
+            <Navbar
+              currentPage={currentPage}
+              onOpenMenu={() => setIsMenuOpen(true)}
+              onSelectProduct={handleSelectProduct}
+              onNavigateToCollection={() => navigateToPage('collection')}
+              onNavigateToAccount={() => navigateToPage('account')}
+              onNavigateToHome={(cb) => navigateToPage('home', cb)}
             />
-          ) : currentPage === 'checkout' ? (
-            /* DEDICATED PAYMENT METHOD & ATELIER CHECKOUT PAGE */
-            <PaymentMethodPage
-              onBackToHome={() => navigateToPage('home')}
-              onOpen3DModal={(jacket) => handleOpen3DModal(jacket)}
+
+            {/* Slide-over Fullscreen Navigation Menu */}
+            <MenuDrawer
+              isOpen={isMenuOpen}
+              onClose={() => setIsMenuOpen(false)}
+              onNavigate={(target) => {
+                if (target === 'collection') {
+                  navigateToPage('collection');
+                } else if (target === 'account') {
+                  navigateToPage('account');
+                } else {
+                  navigateToPage('home', () => {
+                    setTimeout(() => {
+                      const el = document.getElementById(target);
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }, 120);
+                  });
+                }
+              }}
             />
-          ) : (
-            /* HOME PAGE: Shows only 3 sample jackets (1 Suede, 1 Puffer, 1 Varsity) + View All Button */
-            <main id="main-content">
+
+            {/* Slide-over Shopping Cart Drawer */}
+            <CartDrawer
+              onSelectProduct={handleSelectProduct}
+              onProceedToCheckout={() => navigateToPage('checkout')}
+            />
+
+            {currentPage === 'collection' ? (
+              /* SEPARATE FULL COLLECTION PAGE (Shows all 13 jackets with filters) */
+              <FullCollectionPage
+                onOpen3DModal={(jacket) => handleOpen3DModal(jacket)}
+                onBackToHome={() => navigateToPage('home')}
+              />
+            ) : currentPage === 'checkout' ? (
+              /* DEDICATED PAYMENT METHOD & ATELIER CHECKOUT PAGE */
+              <PaymentMethodPage
+                onBackToHome={() => navigateToPage('home')}
+                onOpen3DModal={(jacket) => handleOpen3DModal(jacket)}
+              />
+            ) : currentPage === 'account' ? (
+              /* DEDICATED RESPONSIVE CLIENT ACCOUNT & LOGIN PAGE */
+              <AccountPage
+                onBackToHome={() => navigateToPage('home')}
+                onOpen3DModal={(jacket) => handleOpen3DModal(jacket)}
+              />
+            ) : (
+              /* HOME PAGE: Shows only 3 sample jackets (1 Suede, 1 Puffer, 1 Varsity) + View All Button */
+              <main id="main-content">
               {/* Section 1: Hero with 60 FPS Clothes Rack Stage */}
               <Hero
                 rackRef={rackRef}
@@ -218,7 +234,8 @@ export default function App() {
             onClose={handleCloseModal}
           />
         </div>
-      </CartProvider>
+        </CartProvider>
+      </AuthProvider>
     </CurrencyProvider>
   );
 }

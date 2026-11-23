@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { CONTENT } from '../data/content.js';
+import { useAuth } from '../context/AuthContext.jsx';
 
 export default function MenuDrawer({ isOpen, onClose, onNavigate }) {
+  const { user } = useAuth();
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) onClose();
@@ -27,7 +29,8 @@ export default function MenuDrawer({ isOpen, onClose, onNavigate }) {
     { num: '03', title: 'Tuscan Materiality', target: 'materials', desc: '0.7mm buffed velour & full vegetable tannage' },
     { num: '04', title: 'Lookbook & Styling', target: 'lookbook', desc: 'Editorial visual captures from the Milan showroom' },
     { num: '05', title: 'Bespoke Sizing Guide', target: 'bespoke', desc: 'Custom measurement advisor & lifetime atelier care' },
-    { num: '06', title: 'Atelier Heritage', target: 'story', desc: 'Florence 1974 to the modern global salon' }
+    { num: '06', title: 'Atelier Heritage', target: 'story', desc: 'Florence 1974 to the modern global salon' },
+    { num: '07', title: user ? 'Client Profile & Orders' : 'Sign In / Register', target: 'account', desc: 'Personal atelier archive, order tracking & bespoke measurements' }
   ];
 
   const handleLinkClick = (target) => {

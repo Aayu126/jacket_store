@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useCart } from '../context/CartContext.jsx';
 import { useCurrency } from '../context/CurrencyContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 
-export default function Navbar({ onOpenMenu, onSelectProduct, onNavigateToCollection, onNavigateToHome, currentPage = 'home' }) {
+export default function Navbar({ onOpenMenu, onSelectProduct, onNavigateToCollection, onNavigateToHome, onNavigateToAccount, currentPage = 'home' }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { cartCount, openCart } = useCart();
   const { currency, currentCurrency, changeCurrency, currencies } = useCurrency();
+  const { user } = useAuth();
   const currencyMenuRef = useRef(null);
 
   useEffect(() => {
@@ -118,7 +120,7 @@ export default function Navbar({ onOpenMenu, onSelectProduct, onNavigateToCollec
             </a>
           </div>
 
-          {/* Right: Search, Currency & Cart */}
+          {/* Right: Search, Account/Profile, Currency & Cart */}
           <div className="nav-right">
             <button
               className="nav-icon-btn search-btn"
@@ -130,6 +132,25 @@ export default function Navbar({ onOpenMenu, onSelectProduct, onNavigateToCollec
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
               <span className="search-label">Search</span>
+            </button>
+
+            {/* Profile & Account Button */}
+            <button
+              className={`nav-icon-btn account-btn ${currentPage === 'account' ? 'active' : ''}`}
+              onClick={onNavigateToAccount}
+              aria-label={user ? `Client Profile: ${user.name}` : 'Client Sign In'}
+              title={user ? `Atelier Profile (${user.firstName || user.name})` : 'Client Sign In / Register'}
+              type="button"
+            >
+              {user ? (
+                <span className="nav-avatar-circle" aria-hidden="true">{user.avatarInitials || 'AV'}</span>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              )}
+              <span className="account-label">{user ? (user.firstName || 'Profile') : 'Sign In'}</span>
             </button>
 
             {/* Interactive Currency Selector */}

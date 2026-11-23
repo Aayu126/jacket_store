@@ -110,6 +110,7 @@ export default function Footer({ onOpen3DModal }) {
           <div className="footer-col">
             <h4 className="footer-col-title">Customer Care</h4>
             <ul className="footer-links-list">
+              <li><a href="#/account" className="footer-link">Client Account & Order History</a></li>
               <li><a href="#/checkout" className="footer-link">Payment Methods, UPI & SSL Security</a></li>
               <li><a href="#faq" className="footer-link">Order Tracking & Dispatch Status</a></li>
               <li><a href="#faq" className="footer-link">Worldwide Shipping Rates & Times</a></li>
