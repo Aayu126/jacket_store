@@ -46,3 +46,7 @@ Thumbs.db
 INTERVIEW_AND_RESUME_GUIDE.txt
 *interview*
 *private_notes*
+*.pdf
+*resume*
+*Resume*
+resume_template.html
