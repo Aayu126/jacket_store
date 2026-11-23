@@ -50,12 +50,12 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
     e.preventDefault();
     setAuthError('');
     if (!loginEmail || !loginPassword) {
-      setAuthError('Please enter both your email address and passkey.');
+      setAuthError('Please enter both your email address and password.');
       return;
     }
     const res = login(loginEmail, loginPassword);
     if (res.success) {
-      setAuthSuccess('Welcome back to the Suedo Atelier.');
+      setAuthSuccess('Welcome back.');
     }
   };
 
@@ -74,7 +74,7 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
       password: regPassword
     });
     if (res.success) {
-      setAuthSuccess('Your Atelier Client dossier has been created.');
+      setAuthSuccess('Your account has been created successfully.');
     }
   };
 
@@ -102,20 +102,20 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
 
   return (
     <div className="account-page-wrapper">
-      {/* Top Luxury Bar */}
+      {/* Top Header Bar */}
       <nav className="account-header-bar" aria-label="Account Navigation">
         <div className="account-header-container">
           <button
             type="button"
             className="account-back-btn"
             onClick={onBackToHome}
-            aria-label="Return to Suedo Atelier home"
+            aria-label="Return to store home"
           >
-            ← Return to Atelier
+            ← Back to Store
           </button>
           <div className="account-brand-badge">
             <span className="brand-title">SUEDO</span>
-            <span className="brand-sub">ATELIER · CLIENT PORTAL</span>
+            <span className="brand-sub">ACCOUNT</span>
           </div>
           <div className="account-header-status">
             {isLoggedIn ? (
@@ -135,10 +135,11 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
              STATE A: AUTHENTICATION / LOGIN / REGISTER
              ========================================================================== */
           <div className="auth-card-container">
-            <div className="auth-eyebrow">FLORENCE ATELIER REGISTRY</div>
-            <h1 className="auth-title">Client Access & Salon Dossier</h1>
+            <h1 className="auth-title">{authTab === 'login' ? 'Sign In' : 'Create Account'}</h1>
             <p className="auth-subtitle">
-              Sign in to manage your bespoke commissions, view insured courier tracking, and access private archive allocations.
+              {authTab === 'login'
+                ? 'Welcome back. Enter your email and password to access your account.'
+                : 'Create an account to manage your orders and saved details.'}
             </p>
 
             {/* Switcher Tabs */}
@@ -170,12 +171,12 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
               /* --- SIGN IN FORM --- */
               <form className="auth-form" onSubmit={handleLoginSubmit}>
                 <div className="form-group">
-                  <label htmlFor="login-email">Client Email Address</label>
+                  <label htmlFor="login-email">Email Address</label>
                   <input
                     id="login-email"
                     type="email"
                     required
-                    placeholder="e.g. collector@atelier.com"
+                    placeholder="you@example.com"
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
                     autoComplete="email"
@@ -184,16 +185,16 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
 
                 <div className="form-group">
                   <div className="label-with-link">
-                    <label htmlFor="login-password">Passkey / Password</label>
-                    <a href="#faq" className="forgot-link" onClick={(e) => { e.preventDefault(); alert('For passkey assistance, contact concierge@suedo.atelier'); }}>
-                      Need help?
+                    <label htmlFor="login-password">Password</label>
+                    <a href="#faq" className="forgot-link" onClick={(e) => { e.preventDefault(); alert('For password reset assistance, please contact support@suedo.com'); }}>
+                      Forgot?
                     </a>
                   </div>
                   <input
                     id="login-password"
                     type="password"
                     required
-                    placeholder="Enter your confidential passkey..."
+                    placeholder="Enter your password..."
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                     autoComplete="current-password"
@@ -201,7 +202,7 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
                 </div>
 
                 <button type="submit" className="auth-submit-btn luxury-submit-btn">
-                  <span>Sign In to Atelier</span>
+                  <span>Sign In</span>
                   <span className="btn-arrow-icon" aria-hidden="true">
                     <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13">
                       <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"/>
@@ -218,7 +219,7 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
                     id="reg-name"
                     type="text"
                     required
-                    placeholder="e.g. Julian Sterling"
+                    placeholder="Your Full Name"
                     value={regName}
                     onChange={(e) => setRegName(e.target.value)}
                     autoComplete="name"
@@ -232,14 +233,14 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
                       id="reg-email"
                       type="email"
                       required
-                      placeholder="e.g. sterling@domain.com"
+                      placeholder="you@example.com"
                       value={regEmail}
                       onChange={(e) => setRegEmail(e.target.value)}
                       autoComplete="email"
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="reg-phone">Telephone (For DHL SMS)</label>
+                    <label htmlFor="reg-phone">Phone Number (Optional)</label>
                     <input
                       id="reg-phone"
                       type="tel"
@@ -253,7 +254,7 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
 
                 <div className="form-row-2">
                   <div className="form-group">
-                    <label htmlFor="reg-size">Default Outerwear Size</label>
+                    <label htmlFor="reg-size">Size Preference</label>
                     <select
                       id="reg-size"
                       value={regSize}
@@ -267,7 +268,7 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
                     </select>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="reg-password">Create Passkey</label>
+                    <label htmlFor="reg-password">Create Password</label>
                     <input
                       id="reg-password"
                       type="password"
@@ -281,7 +282,7 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
                 </div>
 
                 <button type="submit" className="auth-submit-btn luxury-submit-btn">
-                  <span>Register Client Dossier</span>
+                  <span>Create Account</span>
                   <span className="btn-arrow-icon" aria-hidden="true">
                     <svg viewBox="0 0 20 20" fill="currentColor" width="13" height="13">
                       <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"/>
@@ -293,7 +294,7 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
 
             {/* DOWN-SIDE Social Authentication */}
             <div className="auth-divider">
-              <span>{authTab === 'login' ? 'OR CONTINUE WITH GOOGLE OR APPLE' : 'OR REGISTER WITH GOOGLE OR APPLE'}</span>
+              <span>OR CONTINUE WITH</span>
             </div>
 
             <div className="social-auth-grid">
@@ -303,7 +304,7 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
                 onClick={() => {
                   setAuthError('');
                   const res = loginWithGoogle();
-                  if (res?.success) setAuthSuccess('Connected via Google Client Verification.');
+                  if (res?.success) setAuthSuccess('Signed in with Google successfully.');
                 }}
                 aria-label="Continue with Google"
               >
@@ -322,7 +323,7 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
                 onClick={() => {
                   setAuthError('');
                   const res = loginWithApple();
-                  if (res?.success) setAuthSuccess('Connected via Apple ID Verification.');
+                  if (res?.success) setAuthSuccess('Signed in with Apple successfully.');
                 }}
                 aria-label="Continue with Apple"
               >
@@ -333,36 +334,19 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
               </button>
             </div>
 
-            {/* Instant 1-Click VIP Collector Demo Access */}
+            {/* Demo Account Access */}
             {authTab === 'login' && (
               <div className="demo-login-box">
-                <div className="demo-box-divider"><span>OR INSTANT PREVIEW</span></div>
+                <div className="demo-box-divider"><span>OR QUICK PREVIEW</span></div>
                 <button
                   type="button"
                   className="demo-login-btn"
                   onClick={loginAsDemo}
                 >
-                  ✨ Sign In as VIP Atelier Collector (Demo)
+                  ✨ Try Demo Account
                 </button>
-                <span className="demo-subtext">Instantly loads pre-populated order tracking & bespoke measurements</span>
               </div>
             )}
-
-            {/* Trust Perks Bar */}
-            <div className="auth-perks-strip">
-              <div className="perk-item">
-                <span className="perk-icon">✓</span>
-                <span>Complimentary Worldwide Courier</span>
-              </div>
-              <div className="perk-item">
-                <span className="perk-icon">✓</span>
-                <span>Bespoke Sleeve Hemming Registry</span>
-              </div>
-              <div className="perk-item">
-                <span className="perk-icon">✓</span>
-                <span>Private Archive Allocations</span>
-              </div>
-            </div>
           </div>
         ) : (
           /* ==========================================================================
@@ -383,7 +367,7 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
                   <div className="profile-meta-line">
                     <span>{user.email}</span>
                     <span className="meta-sep">·</span>
-                    <span>Client #{user.id}</span>
+                    <span>Account #{user.id}</span>
                     <span className="meta-sep">·</span>
                     <span>Joined {user.memberSince}</span>
                   </div>
