@@ -30,6 +30,9 @@ class OrderCreate(BaseModel):
     total_amount: float
     currency: str = "INR"
     shipping_address: Optional[str] = None
+    payment_gateway: Optional[str] = None
+    payment_id: Optional[str] = None
+    payment_status: Optional[str] = "Pending"
 
 
 class OrderOut(BaseModel):
@@ -38,6 +41,9 @@ class OrderOut(BaseModel):
     total_amount: float
     currency: str
     status: str
+    payment_gateway: Optional[str] = None
+    payment_id: Optional[str] = None
+    payment_status: Optional[str] = "Pending"
     tracking_number: Optional[str] = None
     shipping_address: Optional[str] = None
     created_at: datetime

@@ -12,6 +12,9 @@ class Order(Base):
     total_amount = Column(Float, nullable=False)
     currency = Column(String(10), default="INR")
     status = Column(String(50), default="In Atelier Tailoring")
+    payment_gateway = Column(String(50), nullable=True)  # 'razorpay' | 'stripe' | 'courtesy'
+    payment_id = Column(String(100), nullable=True)  # Razorpay Payment ID or Stripe PaymentIntent ID
+    payment_status = Column(String(50), default="Pending")  # 'Pending' | 'Paid' | 'Failed'
     tracking_number = Column(String(100), nullable=True)
     shipping_address = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)

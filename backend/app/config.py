@@ -10,6 +10,15 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:3000,https://jacket-store-blue.vercel.app"
     ENVIRONMENT: str = "development"
 
+    # Razorpay Credentials (for India UPI / RuPay / NetBanking)
+    RAZORPAY_KEY_ID: str = ""
+    RAZORPAY_KEY_SECRET: str = ""
+
+    # Stripe Credentials (for Global Cards / Apple Pay / Google Pay)
+    STRIPE_SECRET_KEY: str = ""
+    STRIPE_PUBLISHABLE_KEY: str = ""
+    STRIPE_WEBHOOK_SECRET: str = ""
+
     @property
     def cors_origins(self) -> List[str]:
         return [origin.strip() for origin in self.ALLOWED_ORIGINS.split(",") if origin.strip()]

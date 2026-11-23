@@ -3,7 +3,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.config import settings
 from app.database import engine, Base
-from app.routers import auth_router, products_router, orders_router, users_router
+from app.routers import (
+    auth_router,
+    products_router,
+    orders_router,
+    users_router,
+    currency_router,
+    payments_router,
+)
 
 
 @asynccontextmanager
@@ -58,6 +65,8 @@ app.include_router(auth_router)
 app.include_router(products_router)
 app.include_router(orders_router)
 app.include_router(users_router)
+app.include_router(currency_router)
+app.include_router(payments_router)
 
 
 @app.get("/", tags=["System"])

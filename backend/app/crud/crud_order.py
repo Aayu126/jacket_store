@@ -27,7 +27,10 @@ def create_order(db: Session, user_id: int, order_in: OrderCreate) -> Order:
         user_id=user_id,
         total_amount=order_in.total_amount,
         currency=order_in.currency,
-        status="In Atelier Tailoring",
+        status="In Atelier Tailoring" if (order_in.payment_status == "Paid" or not order_in.payment_gateway) else "Payment Pending",
+        payment_gateway=order_in.payment_gateway,
+        payment_id=order_in.payment_id,
+        payment_status=order_in.payment_status or "Pending",
         tracking_number=tracking,
         shipping_address=order_in.shipping_address
     )

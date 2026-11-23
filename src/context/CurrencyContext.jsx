@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { fetchExchangeRatesApi } from '../services/api.js';
 
 export const CURRENCIES = {
   INR: {
@@ -93,10 +94,11 @@ export const CURRENCIES = {
   }
 };
 
-export function formatCurrency(amountInBase, currencyCode = 'INR') {
+export function formatCurrency(amountInBase, currencyCode = 'INR', dynamicRate = null) {
   const curr = CURRENCIES[currencyCode] || CURRENCIES.INR;
   const num = typeof amountInBase === 'number' ? amountInBase : parseFloat(amountInBase) || 0;
-  const converted = num * curr.rate;
+  const rateToUse = dynamicRate !== null ? dynamicRate : curr.rate;
+  const converted = num * rateToUse;
 
   if (curr.decimals === 0) {
     return `${curr.symbol}${Math.round(converted).toLocaleString()}`;
@@ -118,6 +120,58 @@ export function CurrencyProvider({ children }) {
     }
   });
 
+  // Rates map initialized with defaults
+  const [rates, setRates] = useState(() => {
+    try {
+      const cached = localStorage.getItem('suedo_live_rates');
+      if (cached) return JSON.parse(cached);
+    } catch (_) {}
+    const initial = {};
+    Object.keys(CURRENCIES).forEach((code) => {
+      initial[code] = CURRENCIES[code].rate;
+    });
+    return initial;
+  });
+
+  const [ratesStatus, setRatesStatus] = useState('initializing'); // 'live' | 'cached' | 'fallback'
+
+  // Fetch live exchange rates on mount
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadRates() {
+      try {
+        // Try backend currency API first
+        const res = await fetchExchangeRatesApi();
+        if (res.success && res.data?.rates) {
+          if (!isMounted) return;
+          setRates(res.data.rates);
+          setRatesStatus(res.data.cached ? 'cached' : 'live');
+          localStorage.setItem('suedo_live_rates', JSON.stringify(res.data.rates));
+          return;
+        }
+
+        // Direct fallback to free open API
+        const fallbackRes = await fetch('https://open.er-api.com/v6/latest/INR').then(r => r.json());
+        if (fallbackRes?.rates && isMounted) {
+          const merged = {};
+          Object.keys(CURRENCIES).forEach(code => {
+            merged[code] = fallbackRes.rates[code] || CURRENCIES[code].rate;
+          });
+          setRates(merged);
+          setRatesStatus('live');
+          localStorage.setItem('suedo_live_rates', JSON.stringify(merged));
+        }
+      } catch (err) {
+        console.warn('Currency live rates unavailable, using atelier baseline:', err);
+        if (isMounted) setRatesStatus('fallback');
+      }
+    }
+
+    loadRates();
+    return () => { isMounted = false; };
+  }, []);
+
   useEffect(() => {
     try {
       localStorage.setItem('suedo_currency', currency);
@@ -130,11 +184,16 @@ export function CurrencyProvider({ children }) {
     }
   };
 
+  const currentRate = rates[currency] || CURRENCIES[currency]?.rate || 1.0;
+
   const formatPrice = (baseAmount) => {
-    return formatCurrency(baseAmount, currency);
+    return formatCurrency(baseAmount, currency, currentRate);
   };
 
-  const currentCurrency = CURRENCIES[currency] || CURRENCIES.INR;
+  const currentCurrency = {
+    ...(CURRENCIES[currency] || CURRENCIES.INR),
+    rate: currentRate
+  };
 
   return (
     <CurrencyContext.Provider
@@ -143,7 +202,9 @@ export function CurrencyProvider({ children }) {
         currentCurrency,
         changeCurrency,
         formatPrice,
-        currencies: CURRENCIES
+        currencies: CURRENCIES,
+        rates,
+        ratesStatus
       }}
     >
       {children}

@@ -78,3 +78,41 @@ export async function placeOrderApi(orderData) {
     body: JSON.stringify(orderData)
   });
 }
+
+// Currency Rates API Call
+export async function fetchExchangeRatesApi() {
+  return apiRequest('/api/currency/rates');
+}
+
+// Payment Integration API Calls
+export async function fetchPaymentConfigApi() {
+  return apiRequest('/api/payments/config');
+}
+
+export async function createRazorpayOrderApi(payload) {
+  return apiRequest('/api/payments/razorpay/create-order', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+}
+
+export async function verifyRazorpayPaymentApi(payload) {
+  return apiRequest('/api/payments/razorpay/verify', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+}
+
+export async function createStripeIntentApi(payload) {
+  return apiRequest('/api/payments/stripe/create-intent', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+}
+
+export async function verifyStripePaymentApi(payload) {
+  return apiRequest('/api/payments/stripe/verify', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+}
