@@ -41,3 +41,8 @@ pnpm-debug.log*
 lerna-debug.log*
 .DS_Store
 Thumbs.db
+
+# Local Interview & Private Notes (Do not push)
+INTERVIEW_AND_RESUME_GUIDE.txt
+*interview*
+*private_notes*
