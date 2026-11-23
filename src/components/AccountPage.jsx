@@ -46,35 +46,39 @@ export default function AccountPage({ onBackToHome, onOpen3DModal }) {
   // Voucher copy state
   const [copiedVoucher, setCopiedVoucher] = useState(false);
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setAuthError('');
     if (!loginEmail || !loginPassword) {
       setAuthError('Please enter both your email address and password.');
       return;
     }
-    const res = login(loginEmail, loginPassword);
-    if (res.success) {
+    const res = await login(loginEmail, loginPassword);
+    if (res?.success) {
       setAuthSuccess('Welcome back.');
+    } else {
+      setAuthError(res?.error || 'Invalid credentials. Please verify your email and password.');
     }
   };
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     setAuthError('');
     if (!regName || !regEmail || !regPassword) {
       setAuthError('Please complete all required fields.');
       return;
     }
-    const res = signup({
+    const res = await signup({
       name: regName,
       email: regEmail,
       phone: regPhone,
       size: regSize,
       password: regPassword
     });
-    if (res.success) {
+    if (res?.success) {
       setAuthSuccess('Your account has been created successfully.');
+    } else {
+      setAuthError(res?.error || 'Could not create account. Please check your details.');
     }
   };
 

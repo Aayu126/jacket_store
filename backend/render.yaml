@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: suedo-atelier-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+        # Set this to your MySQL cloud URL (e.g. from Aiven, TiDB, or Railway)
+        # or leave as sqlite:///./suedo.db for a zero-cost instant server
+        value: sqlite:///./suedo.db
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 1440
+      - key: ALLOWED_ORIGINS
+        value: http://localhost:5173,http://localhost:3000,https://jacket-store-blue.vercel.app
+      - key: ENVIRONMENT
+        value: production

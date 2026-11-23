@@ -1,4 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import {
+  loginApi,
+  registerApi,
+  fetchMeApi,
+  updateMeasurementsApi,
+  updateAddressApi
+} from '../services/api.js';
 
 const AuthContext = createContext(null);
 
@@ -86,16 +93,87 @@ export function AuthProvider({ children }) {
     } catch (_) {}
   }, [user]);
 
-  const login = (email, password) => {
-    // If logging in with demo credentials or any email, authenticate
+  // Sync session with backend API if JWT token is stored in localStorage
+  useEffect(() => {
+    const token = localStorage.getItem('suedo_token');
+    if (token) {
+      fetchMeApi().then(res => {
+        if (res.success && res.data) {
+          const u = res.data;
+          setUser(prev => ({
+            ...(prev || DEMO_USER),
+            id: `SUE-${u.id}`,
+            name: u.full_name,
+            email: u.email,
+            phone: u.phone,
+            role: u.role,
+            measurements: u.profile ? {
+              chest: u.profile.chest,
+              shoulders: u.profile.shoulders,
+              sleeves: u.profile.sleeves,
+              height: u.profile.height,
+              fitPreference: u.profile.fit_preference
+            } : (prev?.measurements || DEMO_USER.measurements),
+            shippingAddress: u.profile ? {
+              address: u.profile.address_line,
+              city: u.profile.city,
+              state: u.profile.state,
+              postalCode: u.profile.postal_code,
+              country: u.profile.country
+            } : (prev?.shippingAddress || DEMO_USER.shippingAddress)
+          }));
+        }
+      }).catch(() => {});
+    }
+  }, []);
+
+  const login = async (email, password) => {
+    // 1. Attempt connection with live FastAPI + MySQL backend
+    try {
+      const apiRes = await loginApi(email, password);
+      if (apiRes.success && apiRes.data?.access_token) {
+        localStorage.setItem('suedo_token', apiRes.data.access_token);
+        const meRes = await fetchMeApi();
+        if (meRes.success && meRes.data) {
+          const u = meRes.data;
+          const mappedUser = {
+            id: `SUE-${u.id}`,
+            name: u.full_name,
+            firstName: u.full_name.split(' ')[0] || 'Collector',
+            lastName: u.full_name.split(' ').slice(1).join(' ') || '',
+            email: u.email,
+            phone: u.phone || '+1 (555) 000-0000',
+            memberSince: new Date(u.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+            tier: u.role === 'admin' ? 'Master Tailor (Admin)' : 'Florence Atelier Member',
+            avatarInitials: u.full_name.split(' ').map(p => p[0]).join('').substring(0, 2).toUpperCase(),
+            shippingAddress: {
+              address: u.profile?.address_line || 'Bespoke Registry on File',
+              city: u.profile?.city || 'Florence',
+              state: u.profile?.state || 'Tuscany',
+              postalCode: u.profile?.postal_code || '50123',
+              country: u.profile?.country || 'Italy'
+            },
+            measurements: {
+              chest: u.profile?.chest || '40"',
+              shoulders: u.profile?.shoulders || '18.5"',
+              sleeves: u.profile?.sleeves || '34"',
+              height: u.profile?.height || "6'0\"",
+              fitPreference: u.profile?.fit_preference || 'Tailored Slim'
+            },
+            orders: DEMO_USER.orders
+          };
+          setUser(mappedUser);
+          return { success: true, user: mappedUser };
+        }
+      } else if (apiRes.error && !apiRes.error.includes('Failed to fetch')) {
+        // If server explicitly returned an auth error (e.g. 401 wrong password)
+        return { success: false, error: apiRes.error };
+      }
+    } catch (_) {}
+
+    // 2. Offline fallback for instant collector demo access
     const firstName = email.split('@')[0] || 'Collector';
     const formattedName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
-    
-    // Check if there's an existing registered profile
-    if (user && user.email.toLowerCase() === email.toLowerCase()) {
-      return { success: true, user };
-    }
-
     const newUser = {
       ...DEMO_USER,
       email: email,
@@ -144,7 +222,19 @@ export function AuthProvider({ children }) {
     return { success: true, user: appleUser };
   };
 
-  const signup = ({ name, email, phone, size, password }) => {
+  const signup = async ({ name, email, phone, size, password }) => {
+    // 1. Attempt registering with live FastAPI backend
+    try {
+      const regRes = await registerApi({ name, email, phone, size, password });
+      if (regRes.success) {
+        // Auto-login to obtain JWT token
+        return await login(email, password);
+      } else if (regRes.error && !regRes.error.includes('Failed to fetch')) {
+        return { success: false, error: regRes.error };
+      }
+    } catch (_) {}
+
+    // 2. Offline fallback if API is not yet running
     const parts = name.trim().split(' ');
     const firstName = parts[0] || 'Collector';
     const lastName = parts.slice(1).join(' ') || '';
@@ -183,6 +273,8 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
+    localStorage.removeItem('suedo_token');
+    localStorage.removeItem('suedo_user');
     setUser(null);
   };
 
@@ -207,6 +299,8 @@ export function AuthProvider({ children }) {
         }
       };
     });
+    // Sync with backend API if authenticated
+    updateMeasurementsApi(measurements).catch(() => {});
   };
 
   const updateAddress = (shippingAddress) => {
@@ -220,6 +314,14 @@ export function AuthProvider({ children }) {
         }
       };
     });
+    // Sync with backend API if authenticated
+    updateAddressApi({
+      address_line: shippingAddress.address,
+      city: shippingAddress.city,
+      state: shippingAddress.state,
+      postal_code: shippingAddress.postalCode,
+      country: shippingAddress.country
+    }).catch(() => {});
   };
 
   const addOrder = (orderData) => {

@@ -11,10 +11,26 @@ async def lifespan(app: FastAPI):
     # Auto-create all tables in MySQL if they do not exist yet
     try:
         Base.metadata.create_all(bind=engine)
-        print("✓ MySQL tables verified / created successfully.")
+        print("✓ Database tables verified / created successfully.")
+
+        # Auto-seed initial catalog if products table is empty
+        from app.database import SessionLocal
+        from app.models.product import Product
+        from seed_data import seed
+
+        db = SessionLocal()
+        try:
+            if db.query(Product).count() == 0:
+                print("ℹ Empty catalog detected: auto-seeding 13 jacket silhouettes and demo accounts...")
+                seed()
+        except Exception as seed_err:
+            print(f"Notice on auto-seed: {seed_err}")
+        finally:
+            db.close()
+
     except Exception as e:
         print(f"⚠ Database connection warning: {e}")
-        print("Please ensure your MySQL server is running and database exists.")
+        print("Please ensure your database server is running and database exists.")
     yield
 
 
